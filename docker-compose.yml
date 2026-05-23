@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: gradient-db
+    environment:
+      POSTGRES_USER: gaussdb
+      POSTGRES_PASSWORD: OpenGauss@2024
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - gradient-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gaussdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gradient-backend
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: postgres
+      DATABASE_USER: gaussdb
+      DATABASE_PASSWORD: OpenGauss@2024
+      JWT_SECRET: your-secret-key-change-in-production-2024
+      FLASK_ENV: production
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - gradient-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: gradient-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - gradient-network
+    restart: unless-stopped
+
+networks:
+  gradient-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
