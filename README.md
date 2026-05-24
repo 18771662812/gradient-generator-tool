@@ -60,7 +60,7 @@ docker-compose up --build
 ```
 重启前端:
 ```
-docker-compose up --build frontend
+docker-compose up -d --build frontend
 ```
 
 首次启动需要构建镜像，大约需要 3-5 分钟。

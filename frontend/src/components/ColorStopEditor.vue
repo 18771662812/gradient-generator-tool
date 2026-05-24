@@ -32,7 +32,7 @@
             placeholder="#000000"
           />
         </div>
-        
+
         <div class="stop-position">
           <input
             type="range"
@@ -41,6 +41,7 @@
             min="0"
             max="100"
             class="position-slider"
+            :style="{ '--thumb-color': stop.color }"
           />
           <div class="position-value">
             <input
@@ -164,10 +165,10 @@ const handlePositionChange = (index, position) => {
 }
 
 .color-picker {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   background: transparent;
   flex-shrink: 0;
@@ -213,7 +214,7 @@ const handlePositionChange = (index, position) => {
 .position-slider {
   flex: 1;
   height: 4px;
-  background: rgba(60, 60, 80, 0.5);
+  background: rgba(120, 120, 150, 0.5);
   border-radius: 2px;
   outline: none;
   -webkit-appearance: none;
@@ -224,7 +225,7 @@ const handlePositionChange = (index, position) => {
   -webkit-appearance: none;
   width: 14px;
   height: 14px;
-  background: #60a5fa;
+  background: var(--thumb-color, #60a5fa);
   border-radius: 50%;
   cursor: pointer;
   transition: transform 0.2s;
@@ -238,7 +239,7 @@ const handlePositionChange = (index, position) => {
 .position-slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: #60a5fa;
+  background: var(--thumb-color, #60a5fa);
   border: none;
   border-radius: 50%;
   cursor: pointer;

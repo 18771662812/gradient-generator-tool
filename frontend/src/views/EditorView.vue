@@ -37,9 +37,6 @@
 
           <!-- 智能推荐面板 -->
           <div class="panel-card">
-            <div class="panel-card-header">
-              <span class="panel-card-title">智能推荐</span>
-            </div>
             <RecommendPanel />
           </div>
         </div>

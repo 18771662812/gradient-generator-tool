@@ -159,7 +159,7 @@ const handleDelete = () => {
 
 .author {
   font-size: 13px;
-  color: #7c6aff;
+  color: #94eefe;
   font-weight: 500;
 }
 
