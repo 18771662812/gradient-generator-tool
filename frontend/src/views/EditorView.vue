@@ -34,6 +34,14 @@
             :angle="currentGradient.angle"
             @update="currentGradient.angle = $event"
           />
+
+          <!-- 智能推荐面板 -->
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <span class="panel-card-title">智能推荐</span>
+            </div>
+            <RecommendPanel />
+          </div>
         </div>
         
         <div class="editor-right">
@@ -92,6 +100,7 @@ import AnglePicker from '@/components/AnglePicker.vue'
 import ColorStopEditor from '@/components/ColorStopEditor.vue'
 import CSSOutput from '@/components/CSSOutput.vue'
 import GradientPreview from '@/components/GradientPreview.vue'
+import RecommendPanel from '@/components/RecommendPanel.vue'
 
 const route = useRoute()
 const gradientStore = useGradientStore()
@@ -376,6 +385,25 @@ onMounted(async () => {
   background: rgba(239, 68, 68, 0.1);
   color: #f87171;
   border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.panel-card {
+  background: rgba(20, 20, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.panel-card-header {
+  margin-bottom: 16px;
+}
+
+.panel-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
 }
 
 @media (max-width: 1200px) {

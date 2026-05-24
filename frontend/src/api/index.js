@@ -57,4 +57,7 @@ const api = {
   }
 }
 
+export const recommendGradients = (color) =>
+  apiClient.post('/gradients/recommend', { color })
+
 export default api

@@ -1,6 +1,9 @@
+import colorsys
+import math
+
 from app.database.pool import get_conn, put_conn
 from app.models import gradient as gradient_model
-from app.services import NotFoundError, ForbiddenError
+from app.services import NotFoundError, ForbiddenError, ServiceError
 
 
 def get_my_gradients(user_id):
@@ -176,3 +179,111 @@ def get_plaza(current_user_id=None):
     finally:
         if conn:
             put_conn(conn)
+
+
+def _hex_to_hsl(hex_color: str):
+    """#rrggbb → (h°, s%, l%)"""
+    hex_color = hex_color.lstrip('#')
+    r, g, b = (int(hex_color[i:i+2], 16) / 255.0 for i in (0, 2, 4))
+    h, l, s = colorsys.rgb_to_hls(r, g, b)
+    return h * 360, s * 100, l * 100
+
+
+def _hsl_to_hex(h: float, s: float, l: float) -> str:
+    """(h°, s%, l%) → #rrggbb"""
+    h = h % 360
+    s = max(0.0, min(100.0, s)) / 100.0
+    l = max(0.0, min(100.0, l)) / 100.0
+    r, g, b = colorsys.hls_to_rgb(h / 360.0, l, s)
+    return '#{:02x}{:02x}{:02x}'.format(
+        int(round(r * 255)),
+        int(round(g * 255)),
+        int(round(b * 255))
+    )
+
+
+def _make_stops(colors: list) -> list:
+    """将颜色列表均匀分配位置，生成 stops 数组"""
+    n = len(colors)
+    return [
+        {"color": c, "position": round(i * 100 / (n - 1)) if n > 1 else 0}
+        for i, c in enumerate(colors)
+    ]
+
+
+def _make_css(stops: list, angle: int = 135) -> str:
+    parts = ', '.join(f"{s['color']} {s['position']}%" for s in stops)
+    return f"linear-gradient({angle}deg, {parts})"
+
+
+def recommend_gradients(hex_color: str) -> dict:
+    """
+    给定一个基准色，返回 5 套渐变配色方案。
+    基于 HSL 色彩空间计算，无需外部依赖。
+    """
+    if not hex_color or not hex_color.startswith('#') or len(hex_color) != 7:
+        raise ServiceError("颜色格式不正确，请传入 #rrggbb 格式", 400)
+
+    try:
+        h, s, l = _hex_to_hsl(hex_color)
+    except Exception:
+        raise ServiceError("颜色解析失败", 400)
+
+    schemes = []
+
+    # 方案1：同色深浅（亮色→原色→暗色）
+    light = _hsl_to_hex(h, s * 0.7, min(l * 1.4, 90))
+    dark  = _hsl_to_hex(h, min(s * 1.1, 100), max(l * 0.55, 10))
+    stops1 = _make_stops([light, hex_color, dark])
+    schemes.append({
+        "name": "同色深浅",
+        "stops": stops1,
+        "css_value": _make_css(stops1),
+        "angle": 135
+    })
+
+    # 方案2：互补撞色（原色→补色，H+180°）
+    comp = _hsl_to_hex((h + 180) % 360, s, l)
+    stops2 = _make_stops([hex_color, comp])
+    schemes.append({
+        "name": "互补撞色",
+        "stops": stops2,
+        "css_value": _make_css(stops2),
+        "angle": 90
+    })
+
+    # 方案3：邻近色调（H-30° → 原色 → H+30°）
+    left30  = _hsl_to_hex((h - 30) % 360, s, l)
+    right30 = _hsl_to_hex((h + 30) % 360, s, l)
+    stops3 = _make_stops([left30, hex_color, right30])
+    schemes.append({
+        "name": "邻近色调",
+        "stops": stops3,
+        "css_value": _make_css(stops3),
+        "angle": 90
+    })
+
+    # 方案4：三角配色（原色 → H+120° → H+240°）
+    tri1 = _hsl_to_hex((h + 120) % 360, s, l)
+    tri2 = _hsl_to_hex((h + 240) % 360, s, l)
+    stops4 = _make_stops([hex_color, tri1, tri2])
+    schemes.append({
+        "name": "三角配色",
+        "stops": stops4,
+        "css_value": _make_css(stops4),
+        "angle": 135
+    })
+
+    # 方案5：莫兰迪（大幅降饱和+微调色相+提亮）
+    mor1 = _hsl_to_hex(h,              s * 0.35, min(l * 1.25, 82))
+    mor2 = _hsl_to_hex((h + 20) % 360, s * 0.28, min(l * 1.15, 78))
+    mor3 = _hsl_to_hex((h + 40) % 360, s * 0.22, min(l * 1.05, 75))
+    stops5 = _make_stops([mor1, mor2, mor3])
+    schemes.append({
+        "name": "莫兰迪",
+        "stops": stops5,
+        "css_value": _make_css(stops5),
+        "angle": 135
+    })
+
+    return {"schemes": schemes}

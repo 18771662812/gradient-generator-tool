@@ -74,8 +74,26 @@ def get_gradient(gradient_id):
         user_id = get_optional_auth()
         result = gradient_service.get_gradient(gradient_id, user_id)
         return jsonify(result)
-    
+
     except ServiceError as e:
         return jsonify({'error': e.message}), e.status_code
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@gradients_bp.route('/recommend', methods=['POST'])
+def recommend():
+    """
+    POST /api/gradients/recommend
+    无需登录。
+    请求体：{ "color": "#ff6b6b" }
+    响应：{ "schemes": [ {name, stops, css_value, angle}, ... ] }
+    """
+    data = request.get_json()
+    if not data or 'color' not in data:
+        return jsonify({'error': '请传入 color 字段'}), 400
+    try:
+        result = gradient_service.recommend_gradients(data['color'])
+        return jsonify(result), 200
+    except ServiceError as e:
+        return jsonify({'error': e.message}), e.status_code

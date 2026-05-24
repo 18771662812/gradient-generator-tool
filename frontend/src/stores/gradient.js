@@ -80,6 +80,18 @@ export const useGradientStore = defineStore('gradient', () => {
     Object.assign(currentGradient.value.stops[index], updates)
   }
 
+  const setType = (type) => {
+    currentGradient.value.type = type
+  }
+
+  const setAngle = (angle) => {
+    currentGradient.value.angle = angle
+  }
+
+  const setStops = (stops) => {
+    currentGradient.value.stops = stops.map(s => ({ ...s }))
+  }
+
   return {
     currentGradient,
     generateCSS,
@@ -87,6 +99,9 @@ export const useGradientStore = defineStore('gradient', () => {
     resetGradient,
     addStop,
     removeStop,
-    updateStop
+    updateStop,
+    setType,
+    setAngle,
+    setStops
   }
 })
