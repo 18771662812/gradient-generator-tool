@@ -45,9 +45,9 @@ const handleLogout = () => {
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
-  background: #1a1a24;
-  border-bottom: 1px solid #2a2a3a;
+  height: 52px;
+  background: #141418;
+  border-bottom: 1px solid #222230;
   z-index: 1000;
 }
 
@@ -57,8 +57,8 @@ const handleLogout = () => {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
+  gap: 0;
+  padding: 0 32px;
 }
 
 .navbar-left {
@@ -66,9 +66,14 @@ const handleLogout = () => {
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 700;
-  color: #7c6aff;
+  font-size: 17px;
+  font-weight: 600;
+  margin-right: 40px;
+  background: linear-gradient(90deg, #ff6b6b, #c084fc, #4ecdc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.3px;
   text-decoration: none;
   transition: opacity 0.2s;
 }
@@ -79,56 +84,48 @@ const handleLogout = () => {
 
 .navbar-center {
   display: flex;
-  gap: 32px;
-  flex: 1;
-  justify-content: center;
+  gap: 2px;
+  flex: 0 0 auto;
 }
 
 .nav-link {
-  color: #a0a0b0;
+  color: #888;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
-  transition: color 0.2s;
-  position: relative;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: color 0.15s;
 }
 
 .nav-link:hover {
-  color: #ffffff;
+  color: #ccc;
 }
 
 .nav-link.router-link-active {
-  color: #7c6aff;
-}
-
-.nav-link.router-link-active::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #7c6aff;
+  color: #e8e8f0;
+  background: #1e1e2a;
 }
 
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .username {
-  color: #ffffff;
-  font-size: 14px;
+  color: #aaa;
+  font-size: 13px;
   font-weight: 500;
   padding: 0 12px;
 }
 
 .btn {
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
   font-weight: 500;
   text-decoration: none;
   border: none;
@@ -138,23 +135,23 @@ const handleLogout = () => {
 }
 
 .btn-primary {
-  background: #7c6aff;
+  background: linear-gradient(135deg, #ff6b6b, #c084fc);
   color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: #6a58e6;
+  opacity: 0.9;
   transform: translateY(-1px);
 }
 
 .btn-secondary {
   background: transparent;
-  color: #a0a0b0;
+  color: #888;
   border: 1px solid #2a2a3a;
 }
 
 .btn-secondary:hover {
-  color: #ffffff;
-  border-color: #3a3a4a;
+  color: #ccc;
+  border-color: #444;
 }
 </style>

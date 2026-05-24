@@ -34,6 +34,10 @@
             @add="gradientStore.addStop()"
             @remove="gradientStore.removeStop($event)"
           />
+        </div>
+        
+        <div class="editor-right">
+          <GradientPreview :css-value="cssValue" />
           
           <CSSOutput :css-value="cssValue" />
           
@@ -73,10 +77,6 @@
               {{ saveMessage }}
             </div>
           </div>
-        </div>
-        
-        <div class="editor-right">
-          <GradientPreview :css-value="cssValue" />
         </div>
       </div>
     </div>
@@ -177,17 +177,24 @@ onMounted(async () => {
 
 .editor-container {
   max-width: 1600px;
+  width: 100%;
   margin: 0 auto;
 }
 
 .editor-layout {
   display: grid;
-  grid-template-columns: 500px 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
   align-items: start;
 }
 
 .editor-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editor-right {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -210,45 +217,21 @@ onMounted(async () => {
 }
 
 .type-btn {
-  padding: 10px 20px;
-  background: rgba(30, 30, 45, 0.8);
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
   font-size: 13px;
-  font-weight: 500;
+  padding: 9px 0;
+  text-align: center;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-
-.type-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 50%, #60a5fa 100%);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.type-btn span {
-  position: relative;
-  z-index: 1;
-}
-
-.type-btn:hover {
-  color: rgba(255, 255, 255, 0.8);
-  border-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid #2a2a3a;
+  color: #888;
+  transition: all 0.15s;
+  background: transparent;
 }
 
 .type-btn.active {
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.type-btn.active::before {
-  opacity: 1;
+  background: linear-gradient(135deg, #ff6b6b22, #c084fc22);
+  border-color: #c084fc55;
+  color: #d4aaff;
 }
 
 .save-panel {
@@ -353,9 +336,9 @@ onMounted(async () => {
 .btn-save {
   width: 100%;
   padding: 11px 20px;
-  background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 50%, #60a5fa 100%);
-  color: #ffffff;
-  border: none;
+  background: rgba(60, 60, 80, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
@@ -365,8 +348,9 @@ onMounted(async () => {
 }
 
 .btn-save:hover:not(:disabled) {
+  background: rgba(70, 70, 90, 0.9);
+  border-color: rgba(255, 255, 255, 0.12);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(192, 132, 252, 0.3);
 }
 
 .btn-save:disabled {

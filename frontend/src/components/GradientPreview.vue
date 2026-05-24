@@ -39,8 +39,6 @@ defineProps({
   border-radius: 8px;
   padding: 20px;
   backdrop-filter: blur(10px);
-  position: sticky;
-  top: 20px;
 }
 
 .preview-title {
@@ -59,7 +57,7 @@ defineProps({
 
 .preview-main {
   width: 100%;
-  height: 280px;
+  height: 180px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
