@@ -18,7 +18,7 @@ services:
     networks:
       - gradient-network
     healthcheck:
-      test: ["CMD-SHELL", "/usr/local/opengauss/bin/gsql -U gaussdb -d postgres -c 'SELECT 1'"]
+      test: ["CMD-SHELL", "LD_LIBRARY_PATH=/usr/local/opengauss/lib /usr/local/opengauss/bin/gsql -U gaussdb -d postgres -c 'SELECT 1'"]
       interval: 15s
       timeout: 10s
       retries: 10
