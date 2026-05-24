@@ -58,6 +58,10 @@ cd Frontend-Tool
 ```bash
 docker-compose up --build
 ```
+重启前端:
+```
+docker-compose up --build frontend
+```
 
 首次启动需要构建镜像，大约需要 3-5 分钟。
 

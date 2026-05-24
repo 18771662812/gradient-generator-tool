@@ -224,7 +224,7 @@ const handlePositionChange = (index, position) => {
   -webkit-appearance: none;
   width: 14px;
   height: 14px;
-  background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+  background: #60a5fa;
   border-radius: 50%;
   cursor: pointer;
   transition: transform 0.2s;
@@ -238,7 +238,7 @@ const handlePositionChange = (index, position) => {
 .position-slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+  background: #60a5fa;
   border: none;
   border-radius: 50%;
   cursor: pointer;

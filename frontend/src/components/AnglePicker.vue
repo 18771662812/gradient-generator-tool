@@ -26,10 +26,10 @@
             :cx="lineX"
             :cy="lineY"
             r="6"
-            fill="url(#gradient)"
+            fill="#60a5fa"
           />
           <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="gradient" gradientUnits="userSpaceOnUse" x1="10" y1="10" x2="110" y2="110">
               <stop offset="0%" style="stop-color:#c084fc;stop-opacity:1" />
               <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
             </linearGradient>

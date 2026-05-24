@@ -16,7 +16,7 @@ services:
     networks:
       - gradient-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U gaussdb"]
+      test: ["CMD-SHELL", "pg_isready -U gaussdb -d postgres"]
       interval: 10s
       timeout: 5s
       retries: 5

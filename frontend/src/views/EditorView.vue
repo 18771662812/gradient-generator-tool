@@ -22,17 +22,17 @@
             </div>
           </div>
           
-          <AnglePicker
-            v-if="currentGradient.type === 'linear'"
-            :angle="currentGradient.angle"
-            @update="currentGradient.angle = $event"
-          />
-          
           <ColorStopEditor
             :stops="currentGradient.stops"
             @update="handleStopUpdate"
             @add="gradientStore.addStop()"
             @remove="gradientStore.removeStop($event)"
+          />
+          
+          <AnglePicker
+            v-if="currentGradient.type === 'linear'"
+            :angle="currentGradient.angle"
+            @update="currentGradient.angle = $event"
           />
         </div>
         
@@ -230,8 +230,8 @@ onMounted(async () => {
 
 .type-btn.active {
   background: linear-gradient(135deg, #ff6b6b22, #c084fc22);
-  border-color: #c084fc55;
-  color: #d4aaff;
+  border-color: #84eccc55;
+  color: #aaeaff;
 }
 
 .save-panel {
