@@ -17,12 +17,6 @@ services:
       - opengauss-data:/var/lib/opengauss
     networks:
       - gradient-network
-    healthcheck:
-      test: ["CMD-SHELL", "LD_LIBRARY_PATH=/usr/local/opengauss/lib /usr/local/opengauss/bin/gsql -U gaussdb -d postgres -c 'SELECT 1'"]
-      interval: 15s
-      timeout: 10s
-      retries: 10
-      start_period: 120s
     restart: unless-stopped
 
   backend:
@@ -41,8 +35,7 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      opengauss:
-        condition: service_healthy
+      - opengauss
     networks:
       - gradient-network
     restart: unless-stopped
