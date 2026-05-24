@@ -6,11 +6,11 @@ services:
     user: root
     shm_size: 1g
     environment:
-      GS_PASSWORD: OpenGauss@2024
+      GS_PASSWORD: OpenGauss2024
       GS_USERNAME: gaussdb
       GS_PORT: 5432
       GS_DB: postgres
-      PGPASSWORD: OpenGauss@2024
+      PGPASSWORD: OpenGauss2024
     ports:
       - "15432:5432"
     volumes:
@@ -29,7 +29,7 @@ services:
       DATABASE_PORT: 5432
       DATABASE_NAME: postgres
       DATABASE_USER: gaussdb
-      DATABASE_PASSWORD: OpenGauss@2024
+      DATABASE_PASSWORD: OpenGauss2024
       JWT_SECRET: your-secret-key-change-in-production-2024
       FLASK_ENV: production
     ports:
