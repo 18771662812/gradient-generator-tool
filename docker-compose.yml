@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   opengauss:
     image: opengauss/opengauss:5.0.0
