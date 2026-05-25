@@ -1,6 +1,6 @@
 services:
   opengauss:
-    image: enmotech/opengauss:latest
+    image: enmotech/opengauss:5.0.0
     container_name: gradient-db
     privileged: true
     user: root
