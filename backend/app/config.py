@@ -7,7 +7,7 @@ class Config:
     DB_HOST: str = os.environ.get('DATABASE_HOST', 'localhost')
     DB_PORT: int = int(os.environ.get('DATABASE_PORT', 5432))
     DB_NAME: str = os.environ.get('DATABASE_NAME', 'postgres')
-    DB_USER: str = os.environ.get('DATABASE_USER', 'gaussdb')
+    DB_USER: str = os.environ.get('DATABASE_USER', 'omm')
     DB_PASSWORD: str = os.environ.get('DATABASE_PASSWORD', 'OpenGauss@2024')
     
     JWT_SECRET: str = os.environ.get('JWT_SECRET', 'your-secret-key-change-in-production')
