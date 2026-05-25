@@ -16,7 +16,7 @@ services:
       - gradient-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "gsql -U omm -d postgres -c 'SELECT 1' || exit 1"]
+      test: ["CMD-SHELL", "/usr/local/opengauss/bin/gsql -U omm -d postgres -c 'SELECT 1' || exit 1"]
       interval: 5s
       timeout: 10s
       retries: 20
