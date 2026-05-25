@@ -40,6 +40,10 @@ CREATE INDEX IF NOT EXISTS idx_favorites_gradient_id ON favorites(gradient_id);
 
 -- 插入测试数据（可选，用于开发测试）
 -- 密码为 'test123' 的 bcrypt hash
-INSERT INTO users (username, password) VALUES 
-('testuser', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqVr/qvQu6')
-ON CONFLICT (username) DO NOTHING;
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM users WHERE username = 'testuser') THEN
+        INSERT INTO users (username, password) VALUES 
+        ('testuser', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5GyYqVr/qvQu6');
+    END IF;
+END $$;
