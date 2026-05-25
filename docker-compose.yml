@@ -4,7 +4,7 @@ services:
     container_name: gradient-db
     privileged: true
     user: root
-    shm_size: 1g
+    shm_size: 4g          
     environment:
       GS_PASSWORD: OpenGauss@2024
       GS_PORT: 5432
@@ -16,11 +16,11 @@ services:
       - gradient-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "/usr/local/opengauss/bin/gsql -U omm -d postgres -c 'SELECT 1' || exit 1"]
-      interval: 5s
-      timeout: 10s
-      retries: 20
-      start_period: 30s
+      test: ["CMD-SHELL", "su -c \"/usr/local/opengauss/bin/gsql -U omm -d postgres -c 'SELECT 1'\" omm || exit 1"]
+      interval: 10s
+      timeout: 15s
+      retries: 30
+      start_period: 60s   
 
   backend:
     build:
