@@ -7,10 +7,7 @@ services:
     shm_size: 1g
     environment:
       GS_PASSWORD: OpenGauss2024
-      GS_USERNAME: gaussdb
       GS_PORT: 5432
-      GS_DB: postgres
-      PGPASSWORD: OpenGauss2024
     ports:
       - "15432:5432"
     volumes:
@@ -18,6 +15,12 @@ services:
     networks:
       - gradient-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "PGPASSWORD=$${GS_PASSWORD:-OpenGauss2024} gsql -U gaussdb -d postgres -p 5432 -c 'SELECT 1' || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
 
   backend:
     build:
@@ -35,7 +38,8 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - opengauss
+      opengauss:
+        condition: service_healthy
     networks:
       - gradient-network
     restart: unless-stopped
